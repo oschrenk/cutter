@@ -2,24 +2,11 @@
 
 ## Usage
 
-**List available profiles**
-```
-cutter profiles --json
-[
-  {
-    "label": "John",
-    "browser": "bunde.id"
-    "path": "/Users/oliver/Library/Application Support/Arc/User Data/Default"
-  },
-  ...
-}
-```
-Read cookies
+**List cookies**
 
 ```
-cutter read --path "/Users/oliver/Library/Application Support/Arc/User Data/Default"
+cutter list
 ```
-
 
 ## Installation
 
