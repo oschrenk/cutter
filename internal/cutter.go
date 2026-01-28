@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"context"
 	"log"
 	"os"
 
@@ -21,7 +22,7 @@ func (cutter *Cutter) List() []Cookie {
 func (cutter *Cutter) safari() []Cookie {
 	dir, _ := os.UserHomeDir()
 	cookiesFile := dir + "/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies"
-	kookies, err := safari.ReadCookies(cookiesFile)
+	kookies, err := safari.ReadCookies(context.Background(), cookiesFile)
 	if err != nil {
 		log.Fatal(err)
 	}
