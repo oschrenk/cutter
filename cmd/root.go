@@ -9,9 +9,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var version = "dev"
+
 var rootCmd = &cobra.Command{
-	Use:   "cutter",
-	Short: "Extracts cookies from browser",
+	Use:     "cutter",
+	Short:   "Extracts cookies from browser",
+	Version: version,
 }
 
 func Execute() {

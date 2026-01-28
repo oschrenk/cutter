@@ -21,7 +21,7 @@ tasks:
     requires:
       vars: [BUILD_TARGET]
     cmds:
-      - go build -v -o "{{.BUILD_TARGET}}"
+      - go build -v -ldflags "-X github.com/oschrenk/cutter/cmd.version=$APP_VERSION" -o "{{.BUILD_TARGET}}"
     silent: true
   test:
     cmds:
@@ -29,7 +29,7 @@ tasks:
     silent: true
   install:
     cmds:
-      - go install
+      - go install -ldflags "-X github.com/oschrenk/cutter/cmd.version=$APP_VERSION"
     silent: true
   uninstall:
     cmds:
@@ -40,8 +40,8 @@ tasks:
       vars: [APP_NAME, RELEASE_DIR]
     cmds:
       - mkdir -p {{.RELEASE_DIR}}
-      - GOOS=darwin GOARCH=arm64 go build -v -o {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
-      - GOOS=darwin GOARCH=amd64 go build -v -o {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-amd64
+      - GOOS=darwin GOARCH=arm64 go build -v -ldflags "-X github.com/oschrenk/cutter/cmd.version=$APP_VERSION" -o {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-arm64
+      - GOOS=darwin GOARCH=amd64 go build -v -ldflags "-X github.com/oschrenk/cutter/cmd.version=$APP_VERSION" -o {{.RELEASE_DIR}}/{{.APP_NAME}}-darwin-amd64
     deps: [tidy]
   tag:
     deps: [artifacts]
