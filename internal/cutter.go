@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/browserutils/kooky/browser/safari"
 	"github.com/go-sqlite/sqlite3"
@@ -16,8 +17,8 @@ func NewInstance() Cutter {
 	return Cutter{}
 }
 
-func (cutter *Cutter) List() []Cookie {
-	return cutter.safari()
+func (cutter *Cutter) List(profile string) []Cookie {
+	return cutter.safari(profile)
 }
 
 // Column indices for bookmarks table (id is included at position 0)
@@ -101,9 +102,22 @@ func (cutter *Cutter) Profiles() []Profile {
 	return profiles
 }
 
-func (cutter *Cutter) safari() []Cookie {
+func (cutter *Cutter) safari(profile string) []Cookie {
 	dir, _ := os.UserHomeDir()
-	cookiesFile := dir + "/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies"
+
+	var cookiesFile string
+	if profile == "" || profile == "default" || profile == "DefaultProfile" {
+		cookiesFile = dir + "/Library/Containers/com.apple.Safari/Data/Library/Cookies/Cookies.binarycookies"
+	} else {
+		// Profile UUIDs are stored lowercase in filesystem
+		uuid := strings.ToLower(profile)
+		cookiesFile = dir + "/Library/Containers/com.apple.Safari/Data/Library/WebKit/WebsiteDataStore/" + uuid + "/Cookies/Cookies.binarycookies"
+	}
+
+	if _, err := os.Stat(cookiesFile); os.IsNotExist(err) {
+		log.Fatalf("Profile '%s' not found. Use 'cutter profiles' to list available profiles.", profile)
+	}
+
 	kookies, err := safari.ReadCookies(context.Background(), cookiesFile)
 	if err != nil {
 		log.Fatal(err)

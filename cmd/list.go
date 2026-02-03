@@ -9,8 +9,11 @@ import (
 	c "github.com/oschrenk/cutter/internal"
 )
 
+var profileFlag string
+
 func init() {
 	rootCmd.AddCommand(listCmd)
+	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (UUID or 'default')")
 }
 
 var listCmd = &cobra.Command{
@@ -19,7 +22,7 @@ var listCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		cutter := c.NewInstance()
-		cookies := cutter.List()
+		cookies := cutter.List(profileFlag)
 		json, err := json.MarshalIndent(cookies, "", "  ")
 		if err != nil {
 			fmt.Println(err)
@@ -27,7 +30,4 @@ var listCmd = &cobra.Command{
 			fmt.Println(string(json))
 		}
 	},
-}
-
-func init() {
 }
