@@ -15,3 +15,8 @@ type Cookie struct {
 	HttpOnly bool      `json:"http_only"`
 	Creation time.Time `json:"creation"`
 }
+
+type Profile struct {
+	Name string `json:"name"`
+	ID   string `json:"id"`
+}

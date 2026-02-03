@@ -12,6 +12,7 @@
 ## Usage
 
 - `cutter list` **List cookies**
+- `cutter profiles` **List Safari profiles**
 
 ### Examples
 
@@ -28,6 +29,11 @@ Get a specific cookie value
 
 ```
 cutter list | jq -r '.[] | select(.domain==".acme.com") | select(.name=="foo") | .value'
+```
+
+List all profile names
+```
+cutter profiles | jq -r .[].name
 ```
 
 ## Installation
