@@ -4,8 +4,8 @@ github.com/Velocidex/ordereddict v0.0.0-20250821063524-02dc06e46238 h1:Q2DFf1f4f
 github.com/Velocidex/ordereddict v0.0.0-20250821063524-02dc06e46238/go.mod h1:+MqO5UMBemyFSm+yRXslbpFTwPUDhFHUf7HPV92twg4=
 github.com/Velocidex/yaml/v2 v2.2.8 h1:GUrSy4SBJ6RjGt43k6MeBKtw2z/27gh4A3hfFmFY3No=
 github.com/Velocidex/yaml/v2 v2.2.8/go.mod h1:PlXIg/Pxmoja48C1vMHo7C5pauAZvLq/UEPOQ3DsjS4=
-github.com/browserutils/kooky v0.2.5 h1:Bk6V92o37YiTvMEabfwuZ0//abi51oeirbmJRY5lbh4=
-github.com/browserutils/kooky v0.2.5/go.mod h1:PUfeVveveeNFb+sdiqbDmrSZFM7LLWR0qMxfvXX/a3g=
+github.com/browserutils/kooky v0.2.6 h1:jsGI/kCKrOoQutTCroRTDciJuikCG/xeZKlahzYxGEk=
+github.com/browserutils/kooky v0.2.6/go.mod h1:YRjmVPLqQqR84NdDqt61+QWfZOe2Cfi1fsqyh6Hhmm4=
 github.com/cpuguy83/go-md2man/v2 v2.0.6/go.mod h1:oOW0eioCTA6cOiMLiUPZOpcVxMig6NIQQ7OS05n1F4g=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
