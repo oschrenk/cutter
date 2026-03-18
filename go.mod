@@ -3,7 +3,7 @@ module github.com/oschrenk/cutter
 go 1.24.0
 
 require (
-	github.com/browserutils/kooky v0.2.6
+	github.com/browserutils/kooky v0.2.8
 	github.com/go-sqlite/sqlite3 v0.0.0-20180313105335-53dd8e640ee7
 	github.com/spf13/cobra v1.10.2
 )
