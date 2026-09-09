@@ -8,6 +8,8 @@
 ## Limitations
 
 - macOS only
+- Partitioned cookies (CHIPS) repeat once per embedding site, so a name can
+  appear many times with different values. Login cookies are never partitioned.
 
 ## Usage
 
