@@ -37,7 +37,7 @@
 
           # Regenerate after changing go.mod/go.sum: set to lib.fakeHash,
           # run `nix build`, then paste the expected hash from the error.
-          vendorHash = "sha256-Xd4U0TbRrG+EYJ8+9JtZWX4h7HIYYiej9E4JHJsDRcc=";
+          vendorHash = "sha256-l/woTe7/792q5NDh7EkvVF2Zw6tcJm0C+HW8Sm7pZdQ=";
 
           # cmd.version is what `cutter --version` prints; the taskfile stamps
           # the same "v"-prefixed value.
