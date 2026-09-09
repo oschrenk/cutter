@@ -11,13 +11,15 @@
 
 ## Usage
 
-- `cutter list [--browser <name>] [--profile <id>] [--format <name>]` **List cookies**
+- `cutter list [--browser <name>] [--profile <id>] [--domain <host>] [--format <name>]` **List cookies**
 - `cutter profiles [--browser <name>]` **List profiles**
 
 `--browser` accepts `safari` (default), `arc` or `chrome`. `--profile` takes the
 ID from `cutter profiles`, not the display name. Arc and Chrome IDs are profile
 directory names such as `Default` or `Profile 1`, so they need quoting.
-`--format` accepts `json` (default) or `netscape`. Names are matched case
+`--format` accepts `json` (default) or `netscape`. `--domain` keeps only the
+cookies a browser would send to a host and its subdomains, so `youtube.com`
+also matches `.youtube.com` and `www.youtube.com`. Names are matched case
 insensitively.
 
 ### Keychain
@@ -73,10 +75,9 @@ cutter list --browser arc --format netscape > cookies.txt
 yt-dlp --cookies cookies.txt 'https://www.youtube.com/watch?v=...'
 ```
 
-Export one site only, rather than handing the tool every cookie you have. The
-first two lines are the header the format requires, so keep them
+Export one site only, rather than handing the tool every cookie you have
 ```
-cutter list -b arc -f netscape | awk 'NR<=2 || /youtube\.com/' > yt-cookies.txt
+cutter list -b arc -d youtube.com -f netscape > yt-cookies.txt
 ```
 
 That file holds live session tokens in plain text. Treat it like a password and
