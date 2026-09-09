@@ -3,16 +3,28 @@
 ## Features
 
 - prints json be default
-- fetches cookies from Safari
+- fetches cookies from Safari, Arc and Chrome
 
 ## Limitations
 
-- currently only works with Safari
+- macOS only
 
 ## Usage
 
-- `cutter list [--profile <id>]` **List cookies**
-- `cutter profiles` **List Safari profiles**
+- `cutter list [--browser <name>] [--profile <id>]` **List cookies**
+- `cutter profiles [--browser <name>]` **List profiles**
+
+`--browser` accepts `safari` (default), `arc` or `chrome`. `--profile` takes the
+ID from `cutter profiles`, not the display name. Arc and Chrome IDs are profile
+directory names such as `Default` or `Profile 1`, so they need quoting.
+
+### Keychain
+
+Arc and Chrome encrypt cookie values with a key held in the login keychain, so
+macOS asks for permission the first time cutter reads them. **Always Allow** is
+safe here: the grant is tied to that one cutter binary and that one keychain
+entry, and no other program can use it. Upgrading cutter changes the binary, so
+macOS asks once more. Safari needs no keychain access.
 
 ### Examples
 
@@ -36,9 +48,21 @@ List all profile names
 cutter profiles | jq -r .[].name
 ```
 
-List cookies for a specific profile
+List cookies for a specific Safari profile
 ```
 cutter list --profile 59869AEE-3D5E-4F8C-87DF-8554461D5221
+```
+
+List Arc profiles, then read one of them
+```
+cutter profiles --browser arc
+cutter list --browser arc --profile "Profile 1"
+```
+
+Read Chrome cookies once, then filter repeatedly without a new keychain prompt
+```
+cutter list --browser chrome > cookies.json
+jq -r '.[] | select(.domain==".github.com") | .name' cookies.json
 ```
 
 ## Installation

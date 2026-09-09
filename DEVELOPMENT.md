@@ -2,10 +2,27 @@
 
 **Requirements**
 
-- [go](https://go.dev/) `brew install go`
+The flake ships a devShell with go, gopls and golangci-lint. With
+[direnv](https://direnv.net/) installed, `direnv allow` puts them on the path.
+Without it, use `nix develop`.
+
+Tools the devShell does not provide:
+
 - [air](https://github.com/cosmtrek/air) `go install github.com/air-verse/air@latest`
 - [staticcheck]() `go install honnef.co/go/tools/cmd/staticcheck@latest`
 
+## Dependencies
+
+kooky is pinned to the head commit of
+[browserutils/kooky#108](https://github.com/browserutils/kooky/pull/108), which
+adds `chromium.KeyringConfigArc`. Arc and Chrome hold their cookie keys under
+their own keychain entries, and the released kooky hardcodes "Chrome Safe
+Storage", so no tagged version can read Arc. Drop the pin once #108 ships in a
+release.
+
+After changing `go.mod` or `go.sum`, `vendorHash` in `flake.nix` no longer
+matches. Set it to `nixpkgs.lib.fakeHash`, run `nix build`, and paste the
+expected hash from the error.
 
 ## Tasks
 
