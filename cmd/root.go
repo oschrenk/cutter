@@ -31,7 +31,7 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVarP(&browserFlag, "browser", "b", "safari", "Browser (safari|arc)")
+	rootCmd.PersistentFlags().StringVarP(&browserFlag, "browser", "b", "safari", "Browser (safari|arc|chrome)")
 }
 
 func initConfig() {

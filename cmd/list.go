@@ -13,7 +13,7 @@ var profileFlag string
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (Safari UUID, Arc directory, or 'default')")
+	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (Safari UUID, Chromium profile directory, or 'default')")
 }
 
 var listCmd = &cobra.Command{

@@ -21,16 +21,17 @@ func NewInstance() Cutter {
 const (
 	BrowserSafari = "safari"
 	BrowserArc    = "arc"
+	BrowserChrome = "chrome"
 )
 
 func (cutter *Cutter) List(browser string, profile string) []Cookie {
 	switch browser {
 	case "", BrowserSafari:
 		return cutter.safari(profile)
-	case BrowserArc:
-		return cutter.arc(profile)
+	case BrowserArc, BrowserChrome:
+		return cutter.chromiumCookies(browser, profile)
 	default:
-		log.Fatalf("Unknown browser '%s'. Use '%s' or '%s'.", browser, BrowserSafari, BrowserArc)
+		log.Fatalf("Unknown browser '%s'. Use '%s', '%s' or '%s'.", browser, BrowserSafari, BrowserArc, BrowserChrome)
 		return nil
 	}
 }
@@ -39,10 +40,10 @@ func (cutter *Cutter) Profiles(browser string) []Profile {
 	switch browser {
 	case "", BrowserSafari:
 		return cutter.safariProfiles()
-	case BrowserArc:
-		return cutter.arcProfiles()
+	case BrowserArc, BrowserChrome:
+		return cutter.chromiumProfiles(browser)
 	default:
-		log.Fatalf("Unknown browser '%s'. Use '%s' or '%s'.", browser, BrowserSafari, BrowserArc)
+		log.Fatalf("Unknown browser '%s'. Use '%s', '%s' or '%s'.", browser, BrowserSafari, BrowserArc, BrowserChrome)
 		return nil
 	}
 }
