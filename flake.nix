@@ -15,9 +15,19 @@
   outputs =
     { self, nixpkgs }:
     let
-      # Single source of truth for the version: ./VERSION holds a bare semver
-      # (e.g. 0.2.0); the "v" prefix is added by the taskfile release flow.
-      version = nixpkgs.lib.fileContents ./VERSION;
+      # ./VERSION holds a bare semver (e.g. 0.2.0); the "v" prefix is added by
+      # the taskfile release flow.
+      baseVersion = nixpkgs.lib.fileContents ./VERSION;
+
+      # Until a release is cut, VERSION alone cannot tell two builds apart: a
+      # homebrew 0.2.0 and a nix build of unreleased main both report v0.2.0.
+      # Appending the git revision makes `cutter --version` and the store path
+      # name identify the exact source, in `git describe` style.
+      #
+      # self.shortRev exists for a clean tree, dirtyShortRev for a working tree
+      # with changes; neither exists for a tarball fetch, hence the fallback.
+      rev = self.shortRev or self.dirtyShortRev or "unknown";
+      version = "${baseVersion}-g${rev}";
 
       # Darwin only: cutter reads Safari's container under
       # ~/Library/Containers/com.apple.Safari, so a linux build has nothing to
