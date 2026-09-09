@@ -13,7 +13,7 @@ var profileFlag string
 
 func init() {
 	rootCmd.AddCommand(listCmd)
-	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (UUID or 'default')")
+	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (Safari UUID, Arc directory, or 'default')")
 }
 
 var listCmd = &cobra.Command{
@@ -22,7 +22,7 @@ var listCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		cutter := c.NewInstance()
-		cookies := cutter.List(profileFlag)
+		cookies := cutter.List(browserFlag, profileFlag)
 		json, err := json.MarshalIndent(cookies, "", "  ")
 		if err != nil {
 			fmt.Println(err)

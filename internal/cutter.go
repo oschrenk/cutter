@@ -17,8 +17,34 @@ func NewInstance() Cutter {
 	return Cutter{}
 }
 
-func (cutter *Cutter) List(profile string) []Cookie {
-	return cutter.safari(profile)
+// Browser identifiers accepted by List and Profiles.
+const (
+	BrowserSafari = "safari"
+	BrowserArc    = "arc"
+)
+
+func (cutter *Cutter) List(browser string, profile string) []Cookie {
+	switch browser {
+	case "", BrowserSafari:
+		return cutter.safari(profile)
+	case BrowserArc:
+		return cutter.arc(profile)
+	default:
+		log.Fatalf("Unknown browser '%s'. Use '%s' or '%s'.", browser, BrowserSafari, BrowserArc)
+		return nil
+	}
+}
+
+func (cutter *Cutter) Profiles(browser string) []Profile {
+	switch browser {
+	case "", BrowserSafari:
+		return cutter.safariProfiles()
+	case BrowserArc:
+		return cutter.arcProfiles()
+	default:
+		log.Fatalf("Unknown browser '%s'. Use '%s' or '%s'.", browser, BrowserSafari, BrowserArc)
+		return nil
+	}
 }
 
 // Column indices for bookmarks table (id is included at position 0)
@@ -42,11 +68,11 @@ const (
 
 // Bookmark type and subtype values for profiles
 const (
-	bookmarkTypeFolder    = 1
+	bookmarkTypeFolder     = 1
 	bookmarkSubtypeProfile = 2
 )
 
-func (cutter *Cutter) Profiles() []Profile {
+func (cutter *Cutter) safariProfiles() []Profile {
 	dir, _ := os.UserHomeDir()
 	dbPath := dir + "/Library/Containers/com.apple.Safari/Data/Library/Safari/SafariTabs.db"
 

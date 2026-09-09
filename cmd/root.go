@@ -11,6 +11,9 @@ import (
 
 var version = "dev"
 
+// browserFlag is persistent so `list` and `profiles` share one definition.
+var browserFlag string
+
 var rootCmd = &cobra.Command{
 	Use:     "cutter",
 	Short:   "Extracts cookies from browser",
@@ -28,6 +31,7 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+	rootCmd.PersistentFlags().StringVarP(&browserFlag, "browser", "b", "safari", "Browser (safari|arc)")
 }
 
 func initConfig() {

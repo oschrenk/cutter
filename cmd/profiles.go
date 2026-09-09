@@ -15,11 +15,11 @@ func init() {
 
 var profilesCmd = &cobra.Command{
 	Use:   "profiles",
-	Short: "List Safari profiles",
+	Short: "List browser profiles",
 	Args:  cobra.MaximumNArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
 		cutter := c.NewInstance()
-		profiles := cutter.Profiles()
+		profiles := cutter.Profiles(browserFlag)
 		json, err := json.MarshalIndent(profiles, "", "  ")
 		if err != nil {
 			fmt.Println(err)
