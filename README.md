@@ -43,20 +43,29 @@ cutter list --profile 59869AEE-3D5E-4F8C-87DF-8554461D5221
 
 ## Installation
 
-**Via Github**
+### nix
+
+```bash
+nix profile install github:oschrenk/cutter
+```
+
+Prebuilt binaries come from the `oschrenk` Cachix cache, which the flake offers
+as a substituter.
+
+### homebrew
+
+```bash
+brew tap oschrenk/made git@github.com:oschrenk/homebrew-made
+brew install oschrenk/made/cutter
+```
+
+### From source
 
 * installs to `$GOBIN/cutter`
 
-```
+```bash
 git clone git@github.com:oschrenk/cutter.git
 cd cutter
 task install
-```
-
-**Via homebrew**
-
-```
-brew tap oschrenk/made git@github.com:oschrenk/homebrew-made
-brew install oschrenk/made/cutter
 ```
 
