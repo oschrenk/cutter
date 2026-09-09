@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
+	"log"
 
 	"github.com/spf13/cobra"
 
@@ -10,10 +10,12 @@ import (
 )
 
 var profileFlag string
+var formatFlag string
 
 func init() {
 	rootCmd.AddCommand(listCmd)
 	listCmd.Flags().StringVarP(&profileFlag, "profile", "p", "", "Profile ID (Safari UUID, Chromium profile directory, or 'default')")
+	listCmd.Flags().StringVarP(&formatFlag, "format", "f", "json", "Output format (json|netscape)")
 }
 
 var listCmd = &cobra.Command{
@@ -23,11 +25,10 @@ var listCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		cutter := c.NewInstance()
 		cookies := cutter.List(browserFlag, profileFlag)
-		json, err := json.MarshalIndent(cookies, "", "  ")
+		out, err := c.Format(cookies, formatFlag)
 		if err != nil {
-			fmt.Println(err)
-		} else {
-			fmt.Println(string(json))
+			log.Fatal(err)
 		}
+		fmt.Println(out)
 	},
 }
