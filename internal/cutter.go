@@ -25,11 +25,12 @@ const (
 )
 
 func (cutter *Cutter) List(browser string, profile string) []Cookie {
-	switch browser {
+	// Browser names are matched case insensitively, so --browser Arc works.
+	switch b := strings.ToLower(browser); b {
 	case "", BrowserSafari:
 		return cutter.safari(profile)
 	case BrowserArc, BrowserChrome:
-		return cutter.chromiumCookies(browser, profile)
+		return cutter.chromiumCookies(b, profile)
 	default:
 		log.Fatalf("Unknown browser '%s'. Use '%s', '%s' or '%s'.", browser, BrowserSafari, BrowserArc, BrowserChrome)
 		return nil
@@ -37,11 +38,11 @@ func (cutter *Cutter) List(browser string, profile string) []Cookie {
 }
 
 func (cutter *Cutter) Profiles(browser string) []Profile {
-	switch browser {
+	switch b := strings.ToLower(browser); b {
 	case "", BrowserSafari:
 		return cutter.safariProfiles()
 	case BrowserArc, BrowserChrome:
-		return cutter.chromiumProfiles(browser)
+		return cutter.chromiumProfiles(b)
 	default:
 		log.Fatalf("Unknown browser '%s'. Use '%s', '%s' or '%s'.", browser, BrowserSafari, BrowserArc, BrowserChrome)
 		return nil
